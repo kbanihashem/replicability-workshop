@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8" />
+r <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>Foundations of Replicability and Verifiability in AI — Workshop</title>
+  <meta name="description" content="Workshop on foundations of replicability and verifiability in AI. Feb 27–Mar 1, 2026. Location TBD." />
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #f6f7f9;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --accent: #1f6feb;
+      --accent-2: #0ea5e9;
+      --shadow: 0 8px 30px rgba(17, 24, 39, 0.08);
+      --radius: 16px;
+      --max: 1040px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .skip-link{
+      position:absolute; left:-999px; top:auto;
+      width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus{
+      left: 16px; top: 16px;
+      width:auto; height:auto;
+      background: #fff;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 240px;
+    }
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: radial-gradient(120% 120% at 20% 20%, var(--accent-2), var(--accent));
+      box-shadow: 0 10px 24px rgba(31, 111, 235, 0.18);
+    }
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand-title strong {
+      font-size: 0.98rem;
+      letter-spacing: -0.01em;
+    }
+    .brand-title span {
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    nav ul{
+      list-style: none;
+      display: flex;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    nav a{
+      display: inline-block;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--text);
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      background: var(--surface);
+      border-color: var(--border);
+      text-decoration: none;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 56px 20px 24px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 900px){
+      .hero { grid-template-columns: 1fr; padding-top: 36px; }
+      .brand { min-width: auto; }
+    }
+
+    .hero h1{
+      margin: 0 0 10px;
+      font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .hero p.lede{
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card-inner{
+      padding: 18px 18px;
+    }
+
+    .meta-grid{
+      display: grid;
+      gap: 10px;
+    }
+    .meta-item{
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 10px;
+      align-items: baseline;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .meta-item dt{
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .meta-item dd{
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    .pill code{
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      color: var(--text);
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+    }
+
+    main{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 20px 70px;
+    }
+
+    section{
+      margin-top: 26px;
+    }
+    section h2{
+      margin: 0 0 12px;
+      font-size: 1.22rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-card{
+      padding: 18px 18px;
+    }
+
+    .abstract p{
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+    .abstract p:last-child{ margin-bottom: 0; }
+
+    .list-grid{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 900px){
+      .list-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px){
+      .list-grid{ grid-template-columns: 1fr; }
+    }
+
+    .person{
+      padding: 12px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      flex: 0 0 auto;
+    }
+    .person strong{
+      display: block;
+      font-size: 0.98rem;
+      letter-spacing: -0.01em;
+    }
+    .person span{
+      display:block;
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    footer{
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    .footer-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .footer-inner small{
+      color: var(--muted);
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 7px;
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header>
+    <div class="nav">
+      <div class="brand" aria-label="Workshop home">
+        <div class="brand-title">
+          <strong>Foundations of Replicability and Verifiability in AI</strong>
+          <span>Workshop • Feb 27 – Mar 1, 2026</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#organizers">Organizing Committee</a></li>
+          <li><a href="#participants">List of Participants</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Foundations of Replicability and Verifiability in AI</h1>
+      <p class="lede">
+        A workshop bringing together theory, methodology, and practice to build conceptual foundations
+        for reliable and verifiable machine learning research.
+      </p>
+    </div>
+
+    <aside class="card" aria-label="Workshop details">
+      <div class="card-inner">
+        <dl class="meta-grid">
+          <div class="meta-item">
+            <dt>Date</dt>
+            <dd>Feb 27 – Mar 1, 2026</dd>
+          </div>
+          <div class="meta-item">
+            <dt>Location</dt>
+            <dd>TBD</dd>
+          </div>
+          <div class="meta-item">
+            <dt>Support</dt>
+            <dd>Supported by UC San Diego (UCSD) and Google Research</dd>
+          </div>
+        </dl>
+      </div>
+    </aside>
+  </div>
+
+  <main id="content">
+    <!-- OVERVIEW -->
+    <section id="overview" aria-label="Overview">
+      <h2>Overview</h2>
+      <div class="card section-card">
+
+        <div class="abstract">
+          <p>
+            Scientific progress in machine learning and statistics fundamentally relies on reproducibility
+            (the ability to verify results with the same data and code) and replicability (the ability to obtain
+            consistent conclusions on new data). As modern AI systems grow in scale and complexity—with non-convex
+            optimization, stochastic training, and sensitivity to initialization—ensuring replicability has become a
+            core methodological challenge.
+          </p>
+          <p>
+            For the AI and ML community, this issue is central to maintaining statistical validity and algorithmic
+            reliability. Failures in reproducibility erode trust in published research and obstruct the translation of
+            theoretical advances into dependable real-world systems.
+          </p>
+          <p>
+            Recent theoretical progress has begun to formalize replicable algorithm design—a concept introduced by
+            Impagliazzo, Lei, Pitassi, and Sorrell (STOC 2022)—as a mathematical foundation for reproducibility. This
+            notion provides a rigorous framework for understanding when an algorithm consistently produces the same
+            output under independent sampling, even in randomized or high-dimensional settings. Follow-up studies have
+            linked replicability to privacy, adaptive generalization, and algorithmic stability, revealing deep
+            structural connections and open challenges in designing provably replicable algorithms for learning and
+            optimization.
+          </p>
+          <p>
+            This workshop aims to bridge theoretical advances and practical reproducibility tools, uniting algorithm
+            designers, statistical theorists, and practitioners. Key questions include:
+          </p>
+          <ul>
+            <li>What formal frameworks best capture reproducibility in randomized and adaptive algorithms?</li>
+            <li>How can theory guide replicable system and experimental pipeline design?</li>
+            <li>What are the limits of provable replicability under computational, statistical, or privacy constraints?</li>
+          </ul>
+          <p>
+            By bringing together diverse perspectives from theory, methodology, and practice, this workshop will lay
+            conceptual foundations for the next generation of reliable and verifiable AI research.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORGANIZERS -->
+    <section id="organizers" aria-label="Organizing committee">
+      <h2>Organizing Committee</h2>
+      <div class="card section-card">
+        <div class="list-grid" role="list">
+          <div class="person" role="listitem">
+            <div>
+              <strong>Elaine Shi</strong>
+              <span>CMU</span>
+            </div>
+          </div>
+          <div class="person" role="listitem">
+            <div>
+              <strong>Jessica Sorrell</strong>
+              <span>Johns Hopkins</span>
+            </div>
+          </div>
+          <div class="person" role="listitem">
+            <div>
+              <strong>Kiarash Banihashem (junior member)</strong>
+              <span>UMD</span>
+            </div>
+          </div>
+          <div class="person" role="listitem">
+            <div>
+              <strong>MohammadHossein Bateni</strong>
+              <span>Google</span>
+            </div>
+          </div>
+          <div class="person" role="listitem">
+            <div>
+              <strong>MohammadTaghi Hajiaghayi</strong>
+              <span>UMD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTICIPANTS -->
+    <section id="participants" aria-label="List of participants">
+      <h2>List of Participants</h2>
+      <div class="card section-card">
+        <div class="list-grid" role="list">
+          <!-- <div class="person" role="listitem"><div><strong>Hossein Esfandiari</strong><span>Host of open problem session</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Russell Impagliazzo</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Toniann Pitassi</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Mark Bun</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Max Hopkins</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Shay Moran</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>John Duchi</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Moritz Hardt</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Kamalika Chaudhuri</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Maria-Florina Balcan</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Percy Liang</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Sara Hooker</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Krzysztof Choromanski</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Omar Montasser</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Amit Daniely</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Jiaheng Zhang</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Shafi Goldwasser</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Jonathan Shafer</strong><span>Invited participant</span></div></div> -->
+          <!-- <div class="person" role="listitem"><div><strong>Greg Gluch</strong><span>Invited participant</span></div></div> -->
+          <div class="person" role="listitem"><div><strong>Amit Daniely</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Greg Gluch</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Hossein Esfandiari</strong><span>Host of open problem session</span></div></div>
+          <div class="person" role="listitem"><div><strong>Jiaheng Zhang</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>John Duchi</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Jonathan Shafer</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Kamalika Chaudhuri</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Krzysztof Choromanski</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Maria-Florina Balcan</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Mark Bun</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Max Hopkins</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Moritz Hardt</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Omar Montasser</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Percy Liang</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Russell Impagliazzo</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Sara Hooker</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Shafi Goldwasser</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Shay Moran</strong><span>Invited participant</span></div></div>
+          <div class="person" role="listitem"><div><strong>Toniann Pitassi</strong><span>Invited participant</span></div></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <small>© 2026 • Foundations of Replicability and Verifiability in AI</small>
+      <small>Last updated: <span id="last-updated">Dec 22, 2025</span></small>
+    </div>
+  </footer>
+
+  <script>
+    // Lightweight enhancement: show the user's local "last updated" date without depending on external libraries.
+    (function () {
+      try {
+        const el = document.getElementById("last-updated");
+        const d = new Date();
+        const opts = { year: "numeric", month: "short", day: "2-digit" };
+        el.textContent = d.toLocaleDateString(undefined, opts);
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
+
